@@ -1,0 +1,227 @@
+
+input.radiocheck + label {
+    cursor: pointer;
+    position: relative;
+}
+input.radiocheck + label::after, input.radiocheck + label::before {
+    font-family: FontAwesome;
+    position: absolute;
+    text-align: center;
+}
+input.radiocheck + label.full {
+    background: #23b7e5 none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+}
+input.radiocheck + label.full::after, input.radiocheck + label.full::before {
+    background: #23b7e5 none repeat scroll 0 0;
+    color: #fff;
+}
+input.radiocheck + label.full::before {
+    content: "";
+}
+input.radiocheck + label.full::after {
+    content: "";
+    opacity: 0;
+    transition: all 0.2s ease 0s;
+}
+input.radiocheck[type="checkbox"]:disabled + label.full, input.radiocheck[type="checkbox"]:disabled + label.full::after, input.radiocheck[type="checkbox"]:disabled + label.full::before, input.radiocheck[type="radio"]:disabled + label.full, input.radiocheck[type="radio"]:disabled + label.full::after, input.radiocheck[type="radio"]:disabled + label.full::before {
+    background: #72d5f3 none repeat scroll 0 0;
+    cursor: default;
+}
+input.radiocheck + label.full.small.right {
+    font-size: 12px;
+    padding: 6px 30px 6px 6px;
+}
+input.radiocheck + label.full.small.left {
+    font-size: 12px;
+    padding: 6px 6px 6px 30px;
+}
+input.radiocheck + label.full.small.right::after, input.radiocheck + label.full.small.right::before {
+    font-size: 14px;
+    height: 18px;
+    line-height: 18px;
+    right: 5px;
+    top: 5px;
+    width: 18px;
+}
+input.radiocheck + label.full.small.left::after, input.radiocheck + label.full.small.left::before {
+    font-size: 14px;
+    height: 18px;
+    left: 5px;
+    line-height: 18px;
+    top: 5px;
+    width: 18px;
+}
+input.radiocheck + label.full.default {
+    font-size: 16px;
+    padding: 10px 40px 10px 10px;
+}
+input.radiocheck + label.full.default.left {
+    font-size: 16px;
+    padding: 10px 10px 10px 40px;
+}
+input.radiocheck + label.full.default::after, input.radiocheck + label.full.default::before {
+    font-size: 22px;
+    height: 24px;
+    line-height: 24px;
+    right: 9px;
+    top: 9px;
+    width: 24px;
+}
+input.radiocheck + label.full.default.left::after, input.radiocheck + label.full.default.left::before {
+    font-size: 22px;
+    height: 24px;
+    left: 9px;
+    line-height: 24px;
+    top: 9px;
+    width: 24px;
+}
+input.radiocheck + label.full.big.right {
+    font-size: 26px;
+    padding: 10px 50px 10px 10px;
+}
+input.radiocheck + label.full.big.right::after, input.radiocheck + label.full.big.right::before {
+    font-size: 30px;
+    height: 26px;
+    line-height: 26px;
+    right: 12px;
+    top: 16px;
+    width: 26px;
+}
+input.radiocheck + label.full.big.left {
+    font-size: 26px;
+    padding: 10px 10px 10px 50px;
+}
+input.radiocheck + label.full.big.left::after, input.radiocheck + label.full.big.left::before {
+    font-size: 30px;
+    height: 26px;
+    left: 12px;
+    line-height: 26px;
+    top: 16px;
+    width: 26px;
+}
+input.radiocheck + label.nofull::after, input.radiocheck + label.nofull::before {
+    border: 2px solid #23b7e5;
+    border-radius: 4px;
+    color: #23b7e5;
+    text-align: center;
+}
+input.radiocheck + label.nofull::before {
+    content: "";
+}
+input.radiocheck + label.nofull::after {
+    background: #23b7e5 none repeat scroll 0 0;
+    color: #fff;
+    content: "";
+    opacity: 0;
+    transition: all 0.2s ease 0s;
+}
+input.radiocheck[type="checkbox"]:disabled + label.nofull {
+    cursor: default;
+}
+input.radiocheck[type="checkbox"]:disabled + label.nofull::before {
+    border: 2px solid #72d5f3;
+    cursor: default;
+}
+input.radiocheck[type="checkbox"]:disabled + label.nofull::after {
+    background: #72d5f3 none repeat scroll 0 0;
+    border: 2px solid #72d5f3;
+    cursor: default;
+}
+input.radiocheck[type="radio"]:disabled + label.nofull {
+    cursor: default;
+}
+input.radiocheck[type="radio"]:disabled + label.nofull::before {
+    border: 2px solid #72d5f3;
+    cursor: default;
+}
+input.radiocheck[type="radio"]:disabled + label.nofull::after {
+    background: #72d5f3 none repeat scroll 0 0;
+    border: 2px solid #72d5f3;
+    cursor: default;
+}
+input.radiocheck + label.nofull.small.right {
+    font-size: 12px;
+    padding-right: 26px;
+    padding-top: 1px;
+}
+input.radiocheck + label.nofull.small.right::after, input.radiocheck + label.nofull.small.right::before {
+    font-size: 14px;
+    height: 16px;
+    line-height: 16px;
+    right: 0;
+    top: 0;
+    width: 16px;
+}
+input.radiocheck + label.nofull.small.left {
+    font-size: 12px;
+    padding-left: 26px;
+    padding-top: 1px;
+}
+input.radiocheck + label.nofull.small.left::after, input.radiocheck + label.nofull.small.left::before {
+    font-size: 14px;
+    height: 16px;
+    left: 0;
+    line-height: 16px;
+    top: 0;
+    width: 16px;
+}
+input.radiocheck + label.nofull.default.right {
+    font-size: 16px;
+    padding-right: 40px;
+    padding-top: 2px;
+}
+input.radiocheck + label.nofull.default.right::after, input.radiocheck + label.nofull.default.right::before {
+    font-size: 22px;
+    height: 24px;
+    line-height: 24px;
+    right: 0;
+    top: 0;
+    width: 24px;
+}
+input.radiocheck + label.nofull.default.left {
+    font-size: 16px;
+    padding-left: 40px;
+    padding-top: 2px;
+}
+input.radiocheck + label.nofull.default.left::after, input.radiocheck + label.nofull.default.left::before {
+    font-size: 22px;
+    height: 24px;
+    left: 0;
+    line-height: 24px;
+    top: 0;
+    width: 24px;
+}
+input.radiocheck + label.nofull.big.right {
+    font-size: 26px;
+    padding-right: 60px;
+    padding-top: 2px;
+}
+input.radiocheck + label.nofull.big.right::after, input.radiocheck + label.nofull.big.right::before {
+    font-size: 30px;
+    height: 36px;
+    line-height: 36px;
+    right: 0;
+    top: 0;
+    width: 36px;
+}
+input.radiocheck + label.nofull.big.left {
+    font-size: 26px;
+    padding-left: 60px;
+    padding-top: 2px;
+}
+input.radiocheck + label.nofull.big.left::after, input.radiocheck + label.nofull.big.left::before {
+    font-size: 30px;
+    height: 36px;
+    left: 0;
+    line-height: 36px;
+    top: 0;
+    width: 36px;
+}
+input.radiocheck[type="checkbox"], input.radiocheck[type="radio"] {
+    display: none;
+}
+input.radiocheck[type="checkbox"]:checked + label::after, input.radiocheck[type="radio"]:checked + label::after {
+    opacity: 1;
+}

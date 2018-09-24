@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.project</groupId>
+    <artifactId>project-product</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>project-product-service</artifactId>
+  
+  <dependencies>
+	  	<!-- 引入需要本地依赖的包 -->
+	  	<dependency>
+		  	<groupId>com.project</groupId>
+		    <artifactId>project-product-dao</artifactId>
+		    <version>0.0.1-SNAPSHOT</version>
+	  	</dependency>
+	  	
+	  	<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+	  	
+	  	
+	  	  <!-- Jackson Json处理工具包 service 和web都可能会用到-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		
+	  	<dependency>
+   			 <groupId>com.google.code.gson</groupId>
+    	 	 <artifactId>gson</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+	  	
+	  	<!-- dubbo相关 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+					<exclusions> 
+				        <exclusion> 
+				            <artifactId>spring</artifactId> 
+				            <groupId>org.springframework</groupId> 
+				        </exclusion> 
+				    </exclusions> 
+			</dependency>
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.github.sgroschupf</groupId>
+				<artifactId>zkclient</artifactId>
+			</dependency>
+			
+					<!-- redis 客户端jedis -->
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.project</groupId>
+				<artifactId>project-product-interface</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+  </dependencies>
+  
+  
+  
+ <build>  
+    <plugins>  
+           <plugin>
+			  <artifactId>maven-assembly-plugin</artifactId>
+			  <configuration>
+			    <descriptor>src/main/assembly/assembly.xml</descriptor>
+			  </configuration>
+			  <executions>
+			    <execution>
+			      <id>make-assembly</id>
+			      <phase>package</phase>
+			      <goals>
+			        <goal>single </goal>
+			      </goals>
+			    </execution>
+			  </executions>
+			</plugin>
+	</plugins> 
+</build>  
+  
+  
+  
+</project>

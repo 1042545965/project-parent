@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  
+		
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+  <!-- 逆向工程生成的bean没有注式 -->
+	<commentGenerator>
+	  	<property name="suppressAllComments" value="true" />
+	</commentGenerator>
+  <!-- 配置数据库连接信息 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/personaldb"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+	
+	
+	<!-- 指定javabean生成位置 -->
+    <javaModelGenerator targetPackage="com.business.admin.entity.systementity.vo" targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+	
+	<!--z指定xml文件生成位置  -->
+    <sqlMapGenerator targetPackage="mapper/systemmapper/vo"  targetProject=".\src\main\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+	
+	<!-- dao生成的目录位置 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.business.admin.dao.systemdao.vo"  targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+	
+	
+<!--     <table tableName="sys_menu" domainObjectName="SysMenu"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+                <property name="useActualColumnNames" value="false"/>
+               <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+    </table> -->
+    
+    <!-- <table tableName="sys_role" domainObjectName="SysRole"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+                <property name="useActualColumnNames" value="false"/>
+               <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+    </table> -->
+	
+<!-- <table tableName="sys_user_role" domainObjectName="SysUserRole"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+                <property name="useActualColumnNames" value="false"/>
+               <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+    </table> -->
+    
+    <table tableName="sys_acl" domainObjectName="SysAcl"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+                <property name="useActualColumnNames" value="false"/>
+               <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+    </table>
+    
+    
+    
+    
+
+  </context>
+</generatorConfiguration>

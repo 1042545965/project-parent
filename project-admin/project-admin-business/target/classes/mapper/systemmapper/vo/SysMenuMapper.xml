@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.admin.dao.systemdao.vo.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.business.admin.entity.systementity.vo.SysMenu">
+    <id column="menuid" jdbcType="BIGINT" property="menuid" />
+    <result column="menuno" jdbcType="VARCHAR" property="menuno" />
+    <result column="menuparentno" jdbcType="VARCHAR" property="menuparentno" />
+    <result column="menuorder" jdbcType="BIGINT" property="menuorder" />
+    <result column="menuname" jdbcType="VARCHAR" property="menuname" />
+    <result column="menuurl" jdbcType="VARCHAR" property="menuurl" />
+    <result column="menuicon" jdbcType="VARCHAR" property="menuicon" />
+    <result column="isvisible" jdbcType="BIGINT" property="isvisible" />
+    <result column="isleaf" jdbcType="BIGINT" property="isleaf" />
+    <result column="systemid" jdbcType="VARCHAR" property="systemid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    menuid, menuno, menuparentno, menuorder, menuname, menuurl, menuicon, isvisible, 
+    isleaf, systemid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where menuid = #{menuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_menu
+    where menuid = #{menuid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.business.admin.entity.systementity.vo.SysMenu">
+    insert into sys_menu (menuid, menuno, menuparentno, 
+      menuorder, menuname, menuurl, 
+      menuicon, isvisible, isleaf, 
+      systemid)
+    values (#{menuid,jdbcType=BIGINT}, #{menuno,jdbcType=VARCHAR}, #{menuparentno,jdbcType=VARCHAR}, 
+      #{menuorder,jdbcType=BIGINT}, #{menuname,jdbcType=VARCHAR}, #{menuurl,jdbcType=VARCHAR}, 
+      #{menuicon,jdbcType=VARCHAR}, #{isvisible,jdbcType=BIGINT}, #{isleaf,jdbcType=BIGINT}, 
+      #{systemid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.business.admin.entity.systementity.vo.SysMenu">
+    insert into sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menuid != null">
+        menuid,
+      </if>
+      <if test="menuno != null">
+        menuno,
+      </if>
+      <if test="menuparentno != null">
+        menuparentno,
+      </if>
+      <if test="menuorder != null">
+        menuorder,
+      </if>
+      <if test="menuname != null">
+        menuname,
+      </if>
+      <if test="menuurl != null">
+        menuurl,
+      </if>
+      <if test="menuicon != null">
+        menuicon,
+      </if>
+      <if test="isvisible != null">
+        isvisible,
+      </if>
+      <if test="isleaf != null">
+        isleaf,
+      </if>
+      <if test="systemid != null">
+        systemid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menuid != null">
+        #{menuid,jdbcType=BIGINT},
+      </if>
+      <if test="menuno != null">
+        #{menuno,jdbcType=VARCHAR},
+      </if>
+      <if test="menuparentno != null">
+        #{menuparentno,jdbcType=VARCHAR},
+      </if>
+      <if test="menuorder != null">
+        #{menuorder,jdbcType=BIGINT},
+      </if>
+      <if test="menuname != null">
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null">
+        #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuicon != null">
+        #{menuicon,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisible != null">
+        #{isvisible,jdbcType=BIGINT},
+      </if>
+      <if test="isleaf != null">
+        #{isleaf,jdbcType=BIGINT},
+      </if>
+      <if test="systemid != null">
+        #{systemid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.business.admin.entity.systementity.vo.SysMenu">
+    update sys_menu
+    <set>
+      <if test="menuno != null">
+        menuno = #{menuno,jdbcType=VARCHAR},
+      </if>
+      <if test="menuparentno != null">
+        menuparentno = #{menuparentno,jdbcType=VARCHAR},
+      </if>
+      <if test="menuorder != null">
+        menuorder = #{menuorder,jdbcType=BIGINT},
+      </if>
+      <if test="menuname != null">
+        menuname = #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null">
+        menuurl = #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuicon != null">
+        menuicon = #{menuicon,jdbcType=VARCHAR},
+      </if>
+      <if test="isvisible != null">
+        isvisible = #{isvisible,jdbcType=BIGINT},
+      </if>
+      <if test="isleaf != null">
+        isleaf = #{isleaf,jdbcType=BIGINT},
+      </if>
+      <if test="systemid != null">
+        systemid = #{systemid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where menuid = #{menuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.business.admin.entity.systementity.vo.SysMenu">
+    update sys_menu
+    set menuno = #{menuno,jdbcType=VARCHAR},
+      menuparentno = #{menuparentno,jdbcType=VARCHAR},
+      menuorder = #{menuorder,jdbcType=BIGINT},
+      menuname = #{menuname,jdbcType=VARCHAR},
+      menuurl = #{menuurl,jdbcType=VARCHAR},
+      menuicon = #{menuicon,jdbcType=VARCHAR},
+      isvisible = #{isvisible,jdbcType=BIGINT},
+      isleaf = #{isleaf,jdbcType=BIGINT},
+      systemid = #{systemid,jdbcType=VARCHAR}
+    where menuid = #{menuid,jdbcType=BIGINT}
+  </update>
+</mapper>

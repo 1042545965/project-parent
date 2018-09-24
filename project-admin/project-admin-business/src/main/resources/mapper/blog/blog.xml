@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.business.admin.dao.blog.diz.BlogDao">
+
+	<select id="getAllBlog" resultType="java.util.Map">
+		SELECT * FROM `blog_article_record` a 
+	</select>
+	
+	
+	<select id="getBlog" resultType="java.util.Map">
+			SELECT * FROM `blog_article_record` a WHERE a.id = #{0}
+	</select>
+	
+	<update id="updateBlog" parameterType="java.util.Map">
+		UPDATE blog_article_record 
+		SET blog_content=#{blog_content}, 
+		blog_title = #{blog_title}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

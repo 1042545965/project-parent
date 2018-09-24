@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<docs>
+	<doc namespace="com.project.product.controller.customer.CustomerController" name="customerController"></doc>
+	<doc namespace="com.project.product.controller.text.CustomersssController" name="aaa"></doc>
+</docs>

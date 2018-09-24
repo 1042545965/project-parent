@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.business.admin.dao.systemdao.vo.SysAclMapper">
+  <resultMap id="BaseResultMap" type="com.business.admin.entity.systementity.vo.SysAcl">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="privilegemaster" jdbcType="VARCHAR" property="privilegemaster" />
+    <result column="privilegemasterkey" jdbcType="VARCHAR" property="privilegemasterkey" />
+    <result column="privilegeaccess" jdbcType="VARCHAR" property="privilegeaccess" />
+    <result column="privilegeaccesskey" jdbcType="VARCHAR" property="privilegeaccesskey" />
+    <result column="privilegeoperation" jdbcType="BIGINT" property="privilegeoperation" />
+    <result column="authorizationdate" jdbcType="DATE" property="authorizationdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, privilegemaster, privilegemasterkey, privilegeaccess, privilegeaccesskey, privilegeoperation, 
+    authorizationdate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_acl
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_acl
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.business.admin.entity.systementity.vo.SysAcl">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_acl (privilegemaster, privilegemasterkey, 
+      privilegeaccess, privilegeaccesskey, privilegeoperation, 
+      authorizationdate)
+    values (#{privilegemaster,jdbcType=VARCHAR}, #{privilegemasterkey,jdbcType=VARCHAR}, 
+      #{privilegeaccess,jdbcType=VARCHAR}, #{privilegeaccesskey,jdbcType=VARCHAR}, #{privilegeoperation,jdbcType=BIGINT}, 
+      #{authorizationdate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.business.admin.entity.systementity.vo.SysAcl">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_acl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="privilegemaster != null">
+        privilegemaster,
+      </if>
+      <if test="privilegemasterkey != null">
+        privilegemasterkey,
+      </if>
+      <if test="privilegeaccess != null">
+        privilegeaccess,
+      </if>
+      <if test="privilegeaccesskey != null">
+        privilegeaccesskey,
+      </if>
+      <if test="privilegeoperation != null">
+        privilegeoperation,
+      </if>
+      <if test="authorizationdate != null">
+        authorizationdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="privilegemaster != null">
+        #{privilegemaster,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegemasterkey != null">
+        #{privilegemasterkey,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeaccess != null">
+        #{privilegeaccess,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeaccesskey != null">
+        #{privilegeaccesskey,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeoperation != null">
+        #{privilegeoperation,jdbcType=BIGINT},
+      </if>
+      <if test="authorizationdate != null">
+        #{authorizationdate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.business.admin.entity.systementity.vo.SysAcl">
+    update sys_acl
+    <set>
+      <if test="privilegemaster != null">
+        privilegemaster = #{privilegemaster,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegemasterkey != null">
+        privilegemasterkey = #{privilegemasterkey,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeaccess != null">
+        privilegeaccess = #{privilegeaccess,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeaccesskey != null">
+        privilegeaccesskey = #{privilegeaccesskey,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegeoperation != null">
+        privilegeoperation = #{privilegeoperation,jdbcType=BIGINT},
+      </if>
+      <if test="authorizationdate != null">
+        authorizationdate = #{authorizationdate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.business.admin.entity.systementity.vo.SysAcl">
+    update sys_acl
+    set privilegemaster = #{privilegemaster,jdbcType=VARCHAR},
+      privilegemasterkey = #{privilegemasterkey,jdbcType=VARCHAR},
+      privilegeaccess = #{privilegeaccess,jdbcType=VARCHAR},
+      privilegeaccesskey = #{privilegeaccesskey,jdbcType=VARCHAR},
+      privilegeoperation = #{privilegeoperation,jdbcType=BIGINT},
+      authorizationdate = #{authorizationdate,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

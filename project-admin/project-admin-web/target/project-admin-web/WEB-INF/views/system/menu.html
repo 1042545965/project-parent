@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+    var ctx = "${ctxPath}";
+</script>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜单维护</title>
+    <link rel="shortcut icon" href="favicon.ico"> <link href="${ctxPath}/res/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${ctxPath}/res/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <link href="${ctxPath}/res/css/animate.min.css" rel="stylesheet">
+    <link href="${ctxPath}/res/css/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="${ctxPath}/res/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+     @include("/lg.html"){} 
+     <script type="text/javascript" src="${ctxPath}/resource/uilib/js/plugins/ligerGrid1.3.2.js"></script>
+<!--      <script type="text/javascript" src="${ctxPath}/resource/uilib/js/plugins/ligerComboBox1.3.2.js"></script> -->
+</head>
+<body style="padding: 4px; overflow: hidden;">
+   @include("/breadcrumb.html"){} 
+	<div id="layout">
+    <div position="left" title="主菜单模块" id="mainmenu">
+        <ul id="maintree"></ul>
+     </div>
+    <div position="center" title="子菜单列表"> 
+        <form id="mainform">
+        <div id="maingrid"  style="margin:2px;"></div> 
+        </form>
+    </div>
+  </div>
+  <ul class="iconlist">
+  </ul>
+  
+  <script type="text/javascript">
+  	 	 var maingform = $("#mainform");   
+ 	  	//验证
+ 	   	jQuery.metadata.setType("attr", "validate"); 
+       	LG.validate(maingform, { debug: true });
+      	//覆盖本页面grid的loading效果
+       	LG.overrideGridLoading(); 
+      		var toolbarOptions = { 
+    	        items: [ 
+    	            { text: '增加', click: itemclick , img:basepath+"resource/icons/silkicons/add.png"}, 
+    	            { line:true },
+    	            { text: '提交修改', click: itemclick, img: basepath+"resource/icons/silkicons/page_save.png" },
+    	            { line: true },
+    	            { text: '删除', click: itemclick, img: basepath+"resource/icons/miniicons/page_delete.gif" },
+    	            { line: true },
+    	            { text: '操作按钮', click: itemclick, img: basepath+"resource/icons/32X32/document_library.gif" } 
+    	        ]
+    	    };
+
+    	    var currentMenuParentNo;
+      	    
+    	    var tree = $("#maintree").ligerTree({
+    	    	url: basepath+'system/findMenu', 
+    	    	parentIcon: basepath+'/resource/icons/32X32/category.gif',
+    	        checkbox: false,
+    	        onClick: function (node)
+    	        {
+    	            if (!node.data.id) return;
+    	            currentMenuParentNo = node.data.id;
+    	            grid.set('parms', { systemno: node.data.id });
+    	            grid.set('url',basepath+'system/findSubclassMenu');
+    	        }
+    	    });
+
+    	    var layout = $("#layout").ligerLayout({ leftWidth: 140 });
+    	     
+    	    var grid = $("#maingrid").ligerGrid({
+    	        columns: [
+    	                {display: '序号', name: 'menuorder', align: 'left', width: 60, minWidth: 60
+    	                , validate: { required: true }
+    	                , editor: { type: 'int' }
+    	                },
+    	                { display: '菜单名', name: 'menuname', align: 'left', width: 180, minWidth: 60
+    	                , validate: { required: true }
+    	                , editor: { type: 'text' }
+    	                },
+    	                { display: '菜单编号', name: 'menuno', align: 'left', width: 130, minWidth: 60
+    	                , validate: { required: true }
+    	                , editor: { type: 'text' }
+    	                },
+    	                { display: '链接地址', name: 'menuurl', align: 'left', width: 300, minWidth: 60
+    	                , validate: { required: true }
+    	                , editor: { type: 'text' }
+    	                },
+    	                {
+    	                    name: 'icon', display: '选择图标', width: 150, align: 'left', textField: 'menuicon'
+    	                    ,
+    	                    	render:function(item){
+                            		return '<i class="'+item.menuicon+'"></i>';
+                            	}
+    	                    , editor:
+    	                        {
+    	                            type: 'popup', valueField: 'id', textField: 'icon_class', grid:
+    	                            {
+    	                                url: basepath+"system/findMainIcon", columns: [
+    	                                { name: 'icon_name', width: 100, display: '图标名称' },
+    	                                { name: 'icon_class', width: 100, display: '图标样式' ,
+    	                                	render:function(item){
+    	                                		return '<i class="'+item.icon_class+'"></i>';
+    	                                	}
+    	                                },
+    	                                { name: 'label', width: 200, display: '描述' },
+    	                                { name: 'icon_type', width: 100, display: '类别' },
+    	                                ]
+    	                            },
+    	                            condition: {
+    	                                prefixID: 'where',
+    	                                /* fields: [
+    	                                    { name: 'icon_name', type: 'text', label: '图标名称', width: 200 ,cssClass : "field",
+    	                                    	attr : {
+    	                    						op : "like"
+    	                    					} 	
+    	                                    }
+    	                                ] */
+    	                            }
+    	                        }
+    	                }
+    	                ], dataAction: 'server', pageSize: 50, toolbar: toolbarOptions, sortName: 'menuno',
+    	        width: '98%', height: '100%', heightDiff: -5, checkbox: false, usePager: false, enabledEdit: true, 
+    	        fixedCellHeight: true, rowHeight: 25
+    	    });
+    	    
+
+      
+
+      function itemclick(item)
+      {
+          switch (item.text)
+          {
+              case "增加":
+                  addNewRow();
+                  break;
+              case "提交修改":
+            	  $(".l-panel-topbar").click();
+            	  var selected = grid. getSelectedRow();
+            	  if(!selected){
+            		   LG.tip('请选择行!');
+            		  return;
+            	  }
+                  LG.ajax({
+                      url: basepath+'system/systemMenuUpdate',
+                      loading:'正在提交中...',
+                      data:selected,
+                      success: function () { 
+                          LG.showSuccess('提交成功');
+                          f_reload();
+                      },
+                      error: function (message)
+                      {
+                          LG.showError(message);
+                      }
+                      }); 
+                  break;
+              case "删除": 
+                  $.ligerDialog.confirm('确定删除吗?', function (confirm) {
+                      if (confirm)
+                          f_delete();
+                  });
+                  break;
+              case "操作按钮":
+                  var selected = grid.getSelected();
+                  if (!selected) return;
+                  showDetail(selected.menuno);
+                  break;
+          }
+      }
+      function f_reload()
+      {
+          grid.loadData();
+      }
+      function f_delete()
+      { 
+          var selected = grid.getSelected();
+          if (selected)
+          {
+              if (!selected.menuid)
+              {
+                  grid.deleteRow(selected);
+                  return;
+              }
+              LG.ajax({
+                  url: basepath+'system/systemMenuDelete',
+                  loading:'正在删除中...',
+                  data: { menuid: selected.menuid },
+                  success: function () { 
+                      LG.showSuccess('删除成功');
+                      f_reload();
+                  },
+                  error: function (message)
+                  {
+                      LG.showError(message);
+                  }
+              });
+          }
+          else
+          {
+              LG.tip('请选择行!');
+          }
+      }
+    
+    function addNewRow() {
+   	var row = grid.getSelectedRow();
+   	grid.addRow({ 
+   		menuorder: 0,
+   		menuname: '',
+   		menuparentno:currentMenuParentNo,
+   		menuno:'',
+   		menuurl:'',
+   		menuicon:''
+   		}, row, null); 
+    }
+    
+    //BUTTION页面操作
+    	var detailWin = null;
+    	function showDetail(menuNo) {
+    	    //验证
+		      var maingform = $("#mainform");
+		      $.metadata.setType("attr", "validate");
+		      LG.validate(maingform, { debig: true }); 
+		      //这里覆盖了本页面grid的loading效果
+		      $.extend($.ligerDefaults.Grid, {
+		          onloading: function ()
+		          {
+		              LG.showLoading('正在加载表格数据中...');
+		          },
+		          onloaded: function ()
+		          {
+		              LG.hideLoading();
+		          }
+		      });
+
+		      function itemclick(item)
+		      {
+		          var editingrow = icongrid.getSelected();
+		          var id = item.id || item.text;
+		          switch (id)
+		          {
+		              case "fastaddbtn":
+		                  $.ligerDialog.confirm('确定增加【增加按钮】、【修改按钮】、【删除按钮】、【查看按钮】吗?', function (confirm)
+		                  {
+		                      if (!confirm) return;
+		                      LG.ajax({
+		                          url: basepath+'systemMenu/addCUDButtons.do',
+		                          loading: '正在增加按钮中...',
+		                          data: { menuNo: menuNo },
+		                          success: function ()
+		                          {
+		                              LG.showSuccess('快速增加按钮成功');
+		                              icongrid.loadData();
+		                          },
+		                          error: function (message)
+		                          {
+		                              LG.showError(message);
+		                          }
+		                      });
+		                  });
+		                  break;
+		              case "clearbtns":
+		                  $.ligerDialog.confirm('确定清空按钮吗?', function (confirm)
+		                  {
+		                      if (!confirm) return;
+		                      LG.ajax({
+		                          url: basepath+'systemMenu/clearButton.do',
+		                          loading: '正在清空按钮中...',
+		                          data: { menuNo: menuNo },
+		                          success: function ()
+		                          {
+		                              LG.showSuccess('清空按钮成功');
+		                              icongrid.loadData();
+		                          },
+		                          error: function (message)
+		                          {
+		                              LG.showError(message);
+		                          }
+		                      });
+		                  });
+		                  break;
+		              case "add":
+		            	  addNewRow();
+		                  break;
+		              case "modify":
+		               	  $(".l-panel-topbar").click();
+		            	  var selected = icongrid. getSelectedRow();
+		            	  if(!selected){
+		            		   LG.tip('请选择行!');
+		            		  return;
+		            	  }
+		                var isAddNew =selected['__status'] == "add";
+		  		        var data = $.extend({ menuNo: menuNo }, selected);
+		  		        if (!isAddNew)
+		  		            data.btnID = selected.btnid;
+		  		        LG.ajax({
+		  		            loading: '正在保存数据中...',
+		  		            url: isAddNew ? basepath+'systemMenu/addButton.do' : basepath+'systemMenu/updateButton.do',
+		  		            data: data,
+		  		            success: function ()
+		  		            { 
+		  		            	icongrid.loadData();
+		  		                LG.tip('提交成功!');
+		  		            },
+		  		            error: function (message)
+		  		            {
+		  		                LG.tip(message);
+		  		            }
+		  		        });
+		                  break;
+		              case "del":
+		                  $.ligerDialog.confirm('确定删除吗?', function (confirm) {
+		                      if (confirm)
+		                          f_delete2();
+		                  });
+		                  break; 
+		          }
+		      }
+		      function f_delete2()
+		      { 
+		          var selected = icongrid.getSelected();
+		          if (selected)
+		          {
+		              if (!selected.btnid)
+		              {
+		            	  icongrid.deleteRow(selected);
+		                  return;
+		              }
+		              LG.ajax({
+		                  url: basepath+'systemMenu/delButton.do',
+		                  loading:'正在删除中...',
+		                  data: { btnID: selected.btnid },
+		                  success: function () { 
+		                      LG.showSuccess('删除成功');
+		                      icongrid.loadData();
+		                  },
+		                  error: function (message)
+		                  {
+		                      LG.showError(message);
+		                  }
+		              });
+		          }
+		          else
+		          {
+		              LG.tip('请选择行!');
+		          }
+		      }
+		      var toolbarOptions = { 
+		        items: [ 
+		            { text: '增加',  id:'add', click: itemclick , img:basepath+"resource/icons/silkicons/add.png"}, 
+		            { line:true },
+		            { text: '提交修改', id:'modify',click: itemclick, img: basepath+"resource/icons/miniicons/page_edit.gif" },
+		            { line: true },
+		            { text: '删除', id:'del',click: itemclick, img: basepath+"resource/icons/miniicons/page_delete.gif" },
+		            { line: true },
+		            { text: '快速增加 【增删改查】', id: 'fastaddbtn', click: itemclick, img: basepath+"resource/icons/miniicons/page_delete.gif" } ,
+		            { line: true },
+		            { text: '清空按钮', id: 'clearbtns', click: itemclick, img: basepath+"resource/icons/miniicons/page_cross.gif" } 
+		            
+		        ]
+		    };
+
+		    var icongrid = $("#maingrid2").ligerGrid({
+		        columns: [
+		                { display: '按钮编号', name: 'btnno', align: 'left', width: 130, minWidth: 60
+		                , validate: { required: true }
+		                , editor: { type: 'text' }
+		                },
+		                { display: '按钮名称', name: 'btnname', align: 'left', width: 300, minWidth: 60
+		                , validate: { required: true }
+		                , editor: { type: 'text' }
+		                }
+		                , { display: '图标', name: 'btnicon', align: 'left', width: 230, minWidth: 50
+		                , editor: { type: 'select',
+		                    ext:
+		                    function (rowdata)
+		                    {
+		                        return {
+		                            onBeforeOpen: function ()
+		                            {
+		                                currentComboBox = this;
+		                                f_openIconsWin();
+		                                return false;
+		                            },
+		                            render: function ()
+		                            {
+		                                return rowdata.btnicon;
+		                            }
+		                        };
+		                    }
+
+		                }
+		                , render: function (item)
+		                {
+		                    return "<div style='width:100%;height:100%;'><img src='" + basepath+(item.btnicon==null?"":item.btnicon)+ "' /></div>";
+		                }
+		                }
+		                ],  toolbar: toolbarOptions, sortName: 'BtnID',
+		        width: '98%', height: 350, heightDiff: -5, checkbox: false, usePager: false, enabledEdit: true, 
+    	        fixedCellHeight: true,rowHeight: 25,
+		        url: basepath+'system/systemMenuAndButtn',
+		        parms: {menuNo : menuNo}
+		    });
+		    
+			detailWin = $.ligerDialog.open({
+				target : $("#detail"),
+				width : 800,
+				height : 450,
+				title:'按钮维护',
+				top : 0,
+				buttons : [{
+					text : '取消',
+					onclick : function() {
+						detailWin.hide();
+					}
+				} ]
+			});
+
+		        function addNewRow()
+		        {
+		           	var row = icongrid.getSelectedRow();
+		           	icongrid.addRow({ 
+		           		btnno: "",
+		           		btnname: '',
+		           		btnicon:''
+		           		}, row, null); 
+		        }
+    	}
+  </script>
+  	<div id="detail" style="display: none;">
+		<form id="mainform" method="post">
+			 <div id="maingrid2"  style="margin:2px;"></div> 
+		</form>
+	</div>
+</body>
+</html>

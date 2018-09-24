@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+    var ctx = "${ctxPath}";
+</script>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜单维护</title>
+    <link rel="shortcut icon" href="favicon.ico"> <link href="${ctxPath}/res/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${ctxPath}/res/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <link href="${ctxPath}/res/css/animate.min.css" rel="stylesheet">
+    <link href="${ctxPath}/res/css/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="${ctxPath}/res/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+     @include("/lg.html"){} 
+     <script type="text/javascript" src="${ctxPath}/resource/uilib/js/plugins/ligerGrid1.3.2.js"></script>
+<!--      <script type="text/javascript" src="${ctxPath}/resource/uilib/js/plugins/ligerComboBox1.3.2.js"></script> -->
+</head>
+<input type="hidden" id="MenuNo" value="${MenuNo}" />
+<body style="padding: 4px; overflow: hidden;">
+   @include("/breadcrumb.html"){} 
+	  <script type="text/javascript">
+	  var win1;
+	  $(function () {
+        	//获取需要加载的数据
+        	var CustomersData = LG.getSelectData2("${ctxPath}/blog/getAllBlog",{});
+        		CustomersData = CustomersData.Data;
+        	var grid = $("#maingrid4").ligerGrid({
+                checkbox: true,
+                columns: [
+                { display: '主键', name: 'id', width: 120 },
+                { display: '文章开头', name: 'blog_title', minWidth: 60 },
+                { display: '博客内容', name: 'blog_content', width: 140,align:'left' }, 
+                { display: '创建时间', name: 'create_time', minWidth: 140 }, 
+                { display: '创建人', name: 'create_by', minWidth: 140 }, 
+                { display: '修改时间', name: 'update_time', minWidth: 140 }, 
+                { display: '修改人', name: 'update_by', minWidth: 140 }
+                ], pageSize:30,
+                data:CustomersData, toolbar: {},
+                width: '100%',height:'97%'
+            });
+        	
+        	
+        	//加载toolbar
+            LG.loadToolbar(grid, toolbarBtnItemClick);
+            //工具条事件
+            function toolbarBtnItemClick(item)
+            {
+                var editingrow = grid.getSelected();
+                switch (item.id) {
+                    case "add":
+                        if (editingrow == null)
+                        {
+                            addNewRow();
+                        } else
+                        {
+                            LG.tip('请先提交或取消修改');
+                        }
+                        break;
+                    case "modify":
+                        var selected = grid.getSelected();
+                        if (!selected) { LG.tip('请选择行!'); return; }
+                        if (editingrow == null)
+                        {
+                            beginEdit();
+                        } else
+                        {
+                            LG.tip('请先保存或取消修改');
+                        }
+                        break;
+                    case "delete":
+                        jQuery.ligerDialog.confirm('确定删除吗?', function (confirm) {
+                            if (confirm)
+                                f_delete();
+                        });
+                        break;
+                    case "view":
+                        if (editingrow != null){
+                        	var blogid =  editingrow.id;
+                        	$.ligerDialog.open({ 
+                        		height: 200, url: '${ctxPath}/blog/toBlogSub?blogid='+blogid+'', 
+                        				title : '查看博客', width: null, showMax: true  , 
+                        				buttons: [
+                                            { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                                        	]
+                        				});
+                        	 $(".l-dialog-max").trigger("click");
+                        } else{
+                            LG.tip('请选择行');
+                        }
+                        break;
+                        
+                    case "cancel":
+                  	  if (editingrow != null)
+                        {
+                            grid.cancelEdit(editingrow); 
+                        } else
+                        {
+                            LG.tip('现在不在编辑状态!');
+                        }
+                        break;
+                }
+            }
+        	
+        });
+    </script>
+  
+  <form>
+    <div id="maingrid4" style="margin:0; padding:0"></div>
+  </form>
+  	
+</body>
+</html>

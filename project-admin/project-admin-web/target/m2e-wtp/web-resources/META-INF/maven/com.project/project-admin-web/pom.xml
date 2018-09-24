@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.project</groupId>
+    <artifactId>project-admin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>project-admin-web</artifactId>
+  <packaging>war</packaging>
+  
+  <dependencies>
+  	<!-- 引入需要本地依赖的business包 -->
+  	<dependency>
+	  	<groupId>com.project</groupId>
+	    <artifactId>project-admin-business</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	
+  	<!-- Jackson Json处理工具包 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+
+
+
+		<!-- JSP相关 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- 文件上传组件 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>com.ibeetl</groupId>
+			<artifactId>beetl</artifactId>
+		</dependency>
+		
+				<!-- fastjson json-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.37</version>
+		</dependency>
+		
+		<dependency>
+		   <groupId>net.oschina.zcx7878</groupId>
+		   <artifactId>fastdfs-client-java</artifactId>
+		   <version>1.27.0.0</version>
+		</dependency>
+       
+		<dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-javac</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+  	
+  		<!-- https://mvnrepository.com/artifact/com.github.xuwei-k/html2image -->
+		<dependency>
+		    <groupId>com.github.xuwei-k</groupId>
+		    <artifactId>html2image</artifactId>
+		    <version>0.1.0</version>
+		</dependency>
+  		
+  	
+  </dependencies>
+  
+
+  <name>admin</name>
+  <build>
+  	 <finalName>admin</finalName>
+  </build>
+ 
+</project>

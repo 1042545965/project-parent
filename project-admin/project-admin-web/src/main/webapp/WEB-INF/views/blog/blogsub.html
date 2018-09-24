@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+    var ctx = "${ctxPath}";
+</script>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查看博客</title>
+    <link rel="shortcut icon" href="favicon.ico"> <link href="${ctxPath}/res/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${ctxPath}/res/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+
+    <link href="${ctxPath}/res/css/animate.min.css" rel="stylesheet">
+    <link href="${ctxPath}/res/css/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="${ctxPath}/res/css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <script type="text/javascript" src="${ctxPath}/res/js/wangEditor.js"></script> <!-- 富文本编辑器 -->
+     @include("/lg.html"){} 
+     <script type="text/javascript" src="${ctxPath}/resource/uilib/js/plugins/ligerGrid1.3.2.js"></script>
+<!--      <script type="text/javascript" src="${ctxPath}/resource/uilib/js/plugins/ligerComboBox1.3.2.js"></script> -->
+</head>
+<body style="padding: 4px; overflow: hidden;">
+   	
+   	<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-8 column">
+					<div id="editor">
+						
+				    </div>
+				    
+				    <div class="container" style="margin-top: 79px">
+						<button type="button" class="btn btn-info btn-sm" id="present">点击提交</button>      
+					</div>	
+				</div>
+				
+				<div class="col-md-4 column">
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									文章标题
+								</div>
+								<div class="panel-body" > 
+									<input style="width: 106%" type="text" class="form-control" placeholder="文章标题" id="blog_title" value="${BlogInfo.blog_title}">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									作者
+								</div>
+								<div class="panel-body">
+									${BlogInfo.update_by}
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									创建时间
+								</div>
+								<div class="panel-body">
+									${BlogInfo.create_time}
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									点击量
+								</div>
+								<div class="panel-body">
+									${BlogInfo.volume_number}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+   	
+	 <script type="text/javascript">
+	 	var blog_content = '${BlogInfo.blog_content}'; 
+	 	var blogid = "${BlogInfo.id}"
+	 	var E = window.wangEditor
+        var editor = new E('#editor')
+        editor.create()
+       // editor.$textElem.attr('contenteditable', true) //开启编辑功能
+        editor.txt.html(blog_content)
+        
+        //获取修改后的内容
+        $("#present").click(function(){
+        	var blog_content_new = editor.txt.html();
+            var blog_title = $("#blog_title").val();
+            var objdata = {};
+            objdata.blog_content = blog_content_new;
+            objdata.blog_title = blog_title;
+            objdata.id = blogid;
+            LG.getSelectData2("${ctxPath}/blog/updateBlog",objdata);
+        });
+        
+        
+        
+    </script>
+  	
+</body>
+</html>

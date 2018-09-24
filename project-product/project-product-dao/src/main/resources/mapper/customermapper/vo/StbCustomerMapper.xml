@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.product.dao.customerdao.vo.StbCustomerMapper">
+  <resultMap id="BaseResultMap" type="com.project.product.entity.customerentity.vo.StbCustomer">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="usercode" jdbcType="VARCHAR" property="usercode" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="orgid" jdbcType="VARCHAR" property="orgid" />
+    <result column="usertype" jdbcType="VARCHAR" property="usertype" />
+    <result column="forbidden" jdbcType="VARCHAR" property="forbidden" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, usercode, userid, username, password, orgid, usertype, forbidden, parent_id, 
+    delete_status, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stb_customer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from stb_customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.project.product.entity.customerentity.vo.StbCustomer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into stb_customer (usercode, userid, username, 
+      password, orgid, usertype, 
+      forbidden, parent_id, delete_status, 
+      create_time)
+    values (#{usercode,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{orgid,jdbcType=VARCHAR}, #{usertype,jdbcType=VARCHAR}, 
+      #{forbidden,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{deleteStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.product.entity.customerentity.vo.StbCustomer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into stb_customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usercode != null">
+        usercode,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="orgid != null">
+        orgid,
+      </if>
+      <if test="usertype != null">
+        usertype,
+      </if>
+      <if test="forbidden != null">
+        forbidden,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="deleteStatus != null">
+        delete_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usercode != null">
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null">
+        #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null">
+        #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="forbidden != null">
+        #{forbidden,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.product.entity.customerentity.vo.StbCustomer">
+    update stb_customer
+    <set>
+      <if test="usercode != null">
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null">
+        orgid = #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null">
+        usertype = #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="forbidden != null">
+        forbidden = #{forbidden,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.product.entity.customerentity.vo.StbCustomer">
+    update stb_customer
+    set usercode = #{usercode,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      orgid = #{orgid,jdbcType=VARCHAR},
+      usertype = #{usertype,jdbcType=VARCHAR},
+      forbidden = #{forbidden,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      delete_status = #{deleteStatus,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="./jquery.min.js"></script>
+</head>
+<body>
+	<div id="div1"><h2>使用 jQuery AJAX 来改变文本</h2></div>  
+    <button id="but1">按钮1</button> <br/>  
+    <button id="but2">按钮2</button> 
+</body>
+	 <script>  
+    $(document).ready(function(){  
+          
+          
+    $("#but1").click(function(){  
+         $.ajax({  
+            url:'http://58zpyn.natappfree.cc/testcross',  
+            type: "get",  
+            async: false,  
+            dataType: "jsonp",  
+            //jsonp: "callbackparam", //服务端用于接收callback调用的function名的参数   
+            //jsonpCallback: "success_jsonpCallback", //callback的function名称,服务端会把名称和data一起传递回来   
+            success: function(json) {  
+             alert(json);  
+            },  
+            error: function(){alert('Error');}  
+    });  
+    });  
+      
+      
+    $("#but2").click(function(){  
+         $.ajax({  
+            url:'http://127.0.0.1:8080/DevInfoWeb/getJsonp',  
+            type: "get",  
+            async: false,  
+            dataType: "jsonp",  
+            jsonp: "callbackparam", //服务端用于接收callback调用的function名的参数   
+            jsonpCallback: "success_jsonpCallback", //callback的function名称,服务端会把名称和data一起传递回来   
+            success: function(json) {  
+             alert(json);  
+            },  
+            error: function(){alert('Error');}  
+    });  
+    });  
+      
+      
+    });  
+    </script>  
+</html>

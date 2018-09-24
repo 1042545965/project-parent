@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!--注入自己的properties ,应为是单例所以他只能有一个注入点，如果有多个记得在location后面隔开 -->
+	<!-- <context:property-placeholder location="classpath:properties/resource.properties" /> -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="300"/> <!--最大能够保持idel状态的对象数-->
+        <property name="maxTotal" value="60000"/><!--最大分配的对象数-->
+        <property name="testOnBorrow" value="true"/><!--当调用borrow Oject方法时，是否进行有效性检查-->
+    </bean>
+		<!-- Jedis客户端单机版 ， 将其注入到Spring容器当中-->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}" type="int"/>
+        <constructor-arg index="3" value="${redis.timeout}" type="int"/>
+        <constructor-arg index="4" value="${redis.password}"/>
+    </bean>
+	<!--我自己实现的那个类,这样我这个类就能够注入了  -->
+	<bean id="poolJedisClient" class="com.project.product.serviceimpl.redis.impl.PoolJedisClient" />
+	
+	<!-- 配置包扫描器，扫描带@Service注解的类 -->
+	<context:component-scan base-package="com.project.product.serviceimpl"/>
+
+		<!-- 发布服务 -->
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="project-product-service"/>
+	<!-- 使用multicast广播注册中心暴露服务地址 -->
+	 <!--<dubbo:registry address="multicast://224.5.6.7:1234"/> -->
+	  <dubbo:registry  address="zookeeper://127.0.0.1:2181" />  
+	<!-- <dubbo:registry protocol="zookeeper" address="192.168.25.154:2181,192.168.25.154:2182,192.168.25.154:2183"/> -->
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20880" />
+    <!-- 声明需要暴露的服务接口 -->
+	 <dubbo:service interface="com.project.product.service.customer.CustomerService" ref="customerServiceImpl" />
+	
+	
+
+
+
+</beans>

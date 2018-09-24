@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.business.admin.dao.logindao.diz.LoginDao">
+	<select id="isCome" resultType="java.util.Map">
+		SELECT * FROM `stb_customer` a WHERE a.usercode=#{0}
+	</select>
+	
+	<select id="findCarModel" resultType="java.util.Map">
+		SELECT a.car_model_id , a.id  FROM `hema_car_model` a WHERE a.car_model_displacement IS NULL 
+	</select>
+	
+	<update id="updateCarModelList">
+		 <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			update `hema_car_model`
+		 	<set> 
+			 	car_model_displacement = #{item.displacement}
+		 	 </set>
+			where id = #{item.id}
+		</foreach>  
+	</update>
+	
+	<update id="updateCarModel">
+			update `hema_car_model`
+		 	  	SET
+			 	car_model_displacement = #{displacement}
+			where id = #{id}
+	</update>
+	
+	<select id="getUserAuth" resultType="java.util.Map">
+		SELECT c.* FROM `sys_user_role` a 
+		RIGHT JOIN sys_acl b ON a.roleid = b.privilegemasterkey 
+		RIGHT JOIN sys_menu c ON b.privilegeaccesskey = c.menuid 
+		WHERE a.usercode=#{0}
+	</select>
+	
+	<insert id="saveProvince" parameterType="java.util.Map">
+		insert into hema_province 
+		(
+		provinceID,
+		provinceName,
+		provinceSpelling,
+		initial,
+		pinYinCode,
+		letter
+		) values (
+		#{provinceID},
+		#{provinceName},
+		#{provinceSpelling},
+		#{character},
+		#{pinYinCode},
+		#{letter}
+		)
+	</insert>
+	
+	<insert id="saveCity" parameterType="java.util.Map">
+		insert into hema_city 
+		(
+		cityID,
+		provinceID,
+		cityName,
+		citySpelling,
+		isHot,
+		initial,
+		pinYinCode,
+		pinyinMark
+		) values (
+		#{cityID},
+		#{provinceID},
+		#{cityName},
+		#{citySpelling},
+		#{isHot},
+		#{character},
+		#{pinYinCode},
+		#{pinyinMark}
+		)
+	</insert>
+	
+</mapper>

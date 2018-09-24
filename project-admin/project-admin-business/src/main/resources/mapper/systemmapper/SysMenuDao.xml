@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.business.admin.dao.systemdao.diz.SysMenuDao">
+	
+	<!--2017-8-10 10:51:13  查找主菜单的一级分类的信息  -->
+  	<select id="findMainMenu" resultType="com.business.admin.utils.LigerUiTree">
+  		SELECT a.menuno AS id , a.menuname AS text , a.menuparentno AS pid FROM `sys_menu` a WHERE a.menuparentno = '0'
+  	</select>
+	
+	<!-- 2017-8-13 09:29:29 查找子菜单信息 -->
+	<select id="findSubclassMenu" resultType="com.business.admin.entity.systementity.diz.SystemCommonEntity">
+		SELECT a.menuid , a.menuparentno , a.menuorder , a.menuname , a.menuno , a.menuurl , a.menuicon  FROM `sys_menu` a WHERE a.menuparentno = #{systemno}
+	</select>
+	
+	<!-- 2017-8-15 09:28:37 查找图标的信息 -->
+	<select id="findMainIcon" resultType="com.business.admin.entity.systementity.diz.SystemCommonEntity" >
+		SELECT a.id AS iconId , a.icon_name , a.icon_class , a.icon_type FROM `sys_icon` a WHERE 1=1
+	</select>
+	
+	<!-- 2017-8-16 10:00:59  获取角色信息 -->
+	<select id="findRoleMessage" resultType="java.util.Map">
+		SELECT a.description , a.id , a.`name` FROM `sys_role` a WHERE 1=1
+	</select>
+	
+	<!-- 2017-8-17 15:12:14 获取用户角色的按钮的权限 -->
+	<select id="findLimitsButton" resultType="java.util.Map">
+		SELECT  
+		b.* FROM `sys_acl` a 
+		LEFT JOIN sys_button b on a.privilegeaccesskey=b.btnid AND a.privilegeaccess='sys_button'
+		WHERE a.privilegemasterkey='1' AND b.menuno = #{menuNo}
+	</select>
+	
+	<!-- 2017-8-18 11:18:55 //获取所有功能菜单的信息 -->
+	<select id="findRoleMenuAccredit" resultType="java.util.Map">
+		SELECT a.menuname AS AccessName , a.menuno AS AccessNo , a.menuicon AS AccessIcon ,a.menuparentno , a.menuid AS MenuID FROM `sys_menu` a WHERE 1=1
+	</select>
+	
+	<select id="findMenuButtn" parameterType="String" resultType="java.util.Map">
+		SELECT a.btnname AS AccessName , a.btnno AS AccessNo , a.btnicon AS AccessIcon , a.btnid AS BtnID FROM `sys_button` a WHERE a.menuno = #{0} AND a.systemid='s001'
+	</select>
+	
+	<!-- 2017-8-19 15:59:27 查看该菜单是否已经授权的一个方法 -->
+	<select id="findQueryRoleAccreditTree" resultType="java.util.Map">
+		SELECT a.* FROM `sys_acl` a WHERE a.privilegemasterkey=#{roleid}
+	</select>
+	
+	<!-- 2017-8-21 11:17:58 //删除sysacl表当中所有相对应的角色的数据 -->
+	<select id="deleteSysAcl" parameterType="String" >
+		DELETE FROM sys_acl WHERE privilegemasterkey=#{0}
+	</select>
+	
+	<!-- 2017-8-23 20:08:52 //返回功能对应的按钮 -->
+	<select id="findMenuAndButtn" parameterType="String" resultType="java.util.Map">
+		SELECT * FROM `sys_button` a WHERE a.menuno = #{0} AND a.systemid='s001'
+	</select>
+	
+    <insert id="insertAutoHome" parameterType="java.util.Map">
+		insert into hema_car_name (car_name, auto_home_id, bfirstletter)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">  
+			(#{item.name},#{item.id},#{item.bfirstletter})
+		</foreach>  
+	</insert> 
+	
+	<insert id="insertAutoHomeMap" parameterType="java.util.Map">
+	 insert into hema_car_name (car_name, auto_home_id, bfirstletter)
+		values 
+			(#{name},#{id},#{bfirstletter}) 
+	</insert>
+	
+	<insert id="insertCarSetAutoHome" >
+		insert into hema_car_set (car_set_name, auto_home_carset_id, car_id , car_set_firstletter , car_set_seriesstate , car_set_seriesorder , set_type , set_type_name)
+		values 
+		<foreach collection="templist" item="item" index="index" separator=",">  
+			(#{item.name},#{item.id},#{car_id},#{item.firstletter},#{item.seriesstate},#{item.seriesorder},#{set_type},#{set_type_name})
+		</foreach>  
+	</insert>
+	
+	<insert id="insertCarModeAutoHome" >
+		insert into hema_car_model (
+		car_model_name, 
+		car_set_id, 
+		car_model_id , 
+		type , 
+		type_name , 
+		car_model_state ,
+		car_model_minprice ,
+		car_model_maxprice
+		)
+		values 
+		<foreach  collection="templist" item="item" index="index" separator=",">  
+			(
+			#{item.name},
+			#{set_id},
+			#{item.id},
+			#{type},
+			#{type_name},
+			#{item.state},
+			#{item.minprice},
+			#{item.maxprice}
+			)
+		</foreach>  
+	</insert>
+	
+	
+	<insert id="insertTest" >
+		insert into hema_province 
+		(
+		provinceID,
+		provinceName,
+		provinceSpelling,
+		character,
+		pinYinCode,
+		letter
+		) values (
+		#{provinceID},
+		#{provinceName},
+		#{provinceSpelling},
+		#{character},
+		#{pinYinCode},
+		#{letter}
+		)
+	</insert>
+	
+	<insert id="quickAddButton" parameterType="java.util.Map">
+		insert into sys_button 
+		(
+		btnname,
+		btnno,
+		btnclass,
+		btnicon,
+		btnscript,
+		menuno,
+		seqno,
+		systemid
+		) values (
+		#{btnname},
+		#{btnno},
+		#{btnclass},
+		#{btnicon},
+		#{btnscript},
+		#{menuno},
+		#{seqno},
+		#{systemid}
+		)
+	</insert>
+	
+	<select id="getAddButton" resultType="java.util.Map">
+		SELECT * FROM `sys_button` a WHERE a.btnid IN (1127 , 1128 , 1129 , 1130 )
+	</select>
+	
+</mapper>

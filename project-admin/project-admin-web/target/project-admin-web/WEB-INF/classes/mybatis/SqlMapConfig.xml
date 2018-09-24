@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	
+	 <mappers>
+		<!-- 手写star -->
+		<mapper resource="mapper/systemmapper/SysMenuDao.xml" />
+		<!-- 手写end -->
+		
+		<!-- 逆向工程star -->
+		<mapper resource="mapper/systemmapper/vo/SysMenuMapper.xml" />
+		<mapper resource="mapper/systemmapper/vo/SysRoleMapper.xml" />
+		<mapper resource="mapper/systemmapper/vo/SysUserRoleMapper.xml" />
+		<mapper resource="mapper/systemmapper/vo/SysAclMapper.xml" />
+		<!-- 逆向工程end -->
+	</mappers>
+	
+
+	
+	
+	
+</configuration>

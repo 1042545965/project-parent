@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <link rel="stylesheet" type="text/css" href="${ctxPath}/resource/css/table.css" /> -->
+<script src="${ctxPath}/resource/js/jquery-1.9.1.js" type="text/javascript"></script>
+<script type="text/javascript" ></script>
+</head>
+<body>
+	<div id="dkztable">
+		
+	</div>
+</body>
+	<script type="text/javascript">
+	var basepath = '${ctxPath}/';
+		$(function(){
+			 $.ajax({
+				 url:basepath+"base/baseapi",
+				 async:false,
+			 	 data:{},
+			 	 error: function(jqXHR, error, errorThrown) {
+		                alert(jqXHR.status);          
+		                },
+				 success:function(result){
+			 		var api = result.queryApiMap;
+					 for (var i = 0; i < api.length; i++) {
+						var melist = api[i].methodList;
+						for (var j = 0; j < melist.length; j++) {
+							var resuletList = melist[1].resuletList;
+							var paramelist = melist[2].parameList;
+							var e="";
+							for (var k = 0; k < paramelist.length; k++) {
+								 e = "<tr>"
+							        	+"<td>"+paramelist[k].maxlength+"</td><td>"+paramelist[k].name+"</td><td>"+paramelist[k].type+"</td><td>"+paramelist[k].required+"</td><td>"+paramelist[k].desc+"</td>"
+							        	+"</tr>"+e;
+							     	
+							}
+							var g="";
+							for (var p = 0; p < resuletList.length; p++) {
+								  g = "<tr>"
+						        		+"<td>"+resuletList[p].field+"</td><td>"+resuletList[p].maxlength+"</td><td>"+resuletList[p].name+"</td><td>"+resuletList[p].type+"</td><td>"+resuletList[p].required+"</td>"
+						        		+"</tr>"; 
+							}
+							var c = "<table border='1'><tr><th scope='col'>传入值</th></tr>"+e+"</table>"
+							var f = "<table border='1'><tr><th scope='col'>返回值</th></tr>"+g+"</table>"
+						}
+						var b = "<tr>"
+						        +"<td>"+melist[0].request+"</td><td>"+melist[0].method+"</td><td>"+melist[0].value+"</td><td>"+melist[0].url+"</td>"
+						        +"<tr><td>"+c+"</td></tr><tr><td>"+f+"</td></tr>"
+						        +"</tr>";
+			 			var a ="<table border='2'>" 
+			 			      +"<tr><th scope='col'>"+api[i].name+"</th></tr>"
+			 			      +b
+			 		          +"</table>"
+			 		   $("#dkztable").append(a);
+					}
+			        
+			    }});
+		});
+	
+	
+	</script>
+</html>

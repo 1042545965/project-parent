@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.business.admin.dao.searchdao.diz.SearchDao">
+	
+	<!-- 测试用的，准备做solr服务，进行分词 -->
+	<select id="findTestAllCustomer" resultType="java.util.Map">
+		 SELECT * FROM(SELECT a.id, a.refer_price, a.special_price , a.create_time , a.inspection_report_url , GROUP_CONCAT( c.`name`,':',b.attr_value)AS str_valuess , 
+			d.attr_value AS weisha , e.attr_value AS jinsha
+			FROM `lefang_product_batch` a 
+			LEFT JOIN lefang_product_attr b ON a.id = b.batch_id
+			LEFT JOIN lefang_base_attr c ON b.attr_id = c.id 
+			LEFT JOIN (SELECT * FROM lefang_product_attr WHERE attr_id='73' ) d ON d.batch_id = a.id
+			LEFT JOIN (SELECT * FROM lefang_product_attr WHERE attr_id='72' ) e ON e.batch_id = a.id
+			GROUP BY a.id) Ma  
+	</select>
+	
+</mapper>
