@@ -27,6 +27,10 @@ import com.business.admin.utils.httpclient.HttpClientUtil;
 
 
 
+/**
+ * @author dkzadmin
+ * is commit
+ */
 @Controller
 public class BeseController {
 	
